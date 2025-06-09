@@ -1,32 +1,32 @@
 module github.com/ekristen/aws-nuke/v3
 
-go 1.23.0
+go 1.24
 
-toolchain go1.24.3
+toolchain go1.24.4
 
 require (
 	github.com/aws/aws-sdk-go v1.55.7
 	github.com/aws/aws-sdk-go-v2 v1.36.3
 	github.com/aws/aws-sdk-go-v2/config v1.28.11
-	github.com/aws/aws-sdk-go-v2/credentials v1.17.67
+	github.com/aws/aws-sdk-go-v2/credentials v1.17.68
 	github.com/aws/aws-sdk-go-v2/service/apigateway v1.28.12
 	github.com/aws/aws-sdk-go-v2/service/appsync v1.42.3
 	github.com/aws/aws-sdk-go-v2/service/cloudfront v1.44.12
-	github.com/aws/aws-sdk-go-v2/service/docdb v1.41.3
+	github.com/aws/aws-sdk-go-v2/service/docdb v1.41.4
 	github.com/aws/aws-sdk-go-v2/service/docdbelastic v1.15.2
 	github.com/aws/aws-sdk-go-v2/service/dsql v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/ecs v1.54.6
-	github.com/aws/aws-sdk-go-v2/service/efs v1.35.3
+	github.com/aws/aws-sdk-go-v2/service/efs v1.35.4
 	github.com/aws/aws-sdk-go-v2/service/iam v1.38.10
 	github.com/aws/aws-sdk-go-v2/service/neptunegraph v1.17.3
 	github.com/aws/aws-sdk-go-v2/service/route53profiles v1.4.17
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.72.3
 	github.com/aws/aws-sdk-go-v2/service/s3control v1.52.7
 	github.com/aws/aws-sdk-go-v2/service/ssmquicksetup v1.3.10
-	github.com/aws/aws-sdk-go-v2/service/sts v1.33.19
+	github.com/aws/aws-sdk-go-v2/service/sts v1.33.20
 	github.com/aws/aws-sdk-go-v2/service/transfer v1.55.5
 	github.com/aws/smithy-go v1.22.3
-	github.com/ekristen/libnuke v1.0.0
+	github.com/ekristen/libnuke v1.3.0
 	github.com/fatih/color v1.18.0
 	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.6.0
@@ -37,7 +37,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/urfave/cli/v3 v3.3.3
 	go.uber.org/ratelimit v0.3.1
-	golang.org/x/text v0.25.0
+	golang.org/x/text v0.26.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -55,7 +55,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sso v1.25.3 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.30.1 // indirect
 	github.com/benbjohnson/clock v1.3.0 // indirect
-	github.com/cpuguy83/go-md2man/v2 v2.0.5 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
@@ -64,11 +63,9 @@ require (
 	github.com/mb0/glob v0.0.0-20160210091149-1eb79d2de6c4 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
-	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/stevenle/topsort v0.2.0 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
-	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
-	golang.org/x/sync v0.14.0 // indirect
+	golang.org/x/sync v0.15.0 // indirect
 	golang.org/x/sys v0.25.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
