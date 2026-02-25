@@ -70,6 +70,8 @@ github.com/aws/aws-sdk-go-v2/service/ram v1.34.19 h1:KgzHjJvrAw5RQ5tXEyUX1B9zcPu
 github.com/aws/aws-sdk-go-v2/service/ram v1.34.19/go.mod h1:wHbYtm0qUAphMlG61fmCj0qJyVFgYJaHyYcI1sxvLxI=
 github.com/aws/aws-sdk-go-v2/service/route53profiles v1.4.17 h1:x19QmT0wHVz5v48OqvGY1B18Pdw3Z1XHsc/+eLWRUQ8=
 github.com/aws/aws-sdk-go-v2/service/route53profiles v1.4.17/go.mod h1:Fw3q+gxXdlWm/chYEtIbeILj3bqObPLm7fbn/bPUXaE=
+github.com/aws/aws-sdk-go-v2/service/route53resolver v1.41.1 h1:nhXTcE5IxAz+AIRSw0qj8/Qzx5SQPQJ5jbh64Py1a3A=
+github.com/aws/aws-sdk-go-v2/service/route53resolver v1.41.1/go.mod h1:sw/NeWUDqWachTcxgkz7ah43Tap829L5AyaHkBJKx4Q=
 github.com/aws/aws-sdk-go-v2/service/s3 v1.72.3 h1:WZOmJfCDV+4tYacLxpiojoAdT5sxTfB3nTqQNtZu+J4=
 github.com/aws/aws-sdk-go-v2/service/s3 v1.72.3/go.mod h1:xMekrnhmJ5aqmyxtmALs7mlvXw5xRh+eYjOjvrIIFJ4=
 github.com/aws/aws-sdk-go-v2/service/s3control v1.52.7 h1:cewH1fJ35N26pujUo8pXtqngf0QZio0ko62rT1x2Uak=

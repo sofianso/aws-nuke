@@ -31,6 +31,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/networkfirewall v1.53.0
 	github.com/aws/aws-sdk-go-v2/service/ram v1.34.19
 	github.com/aws/aws-sdk-go-v2/service/route53profiles v1.4.17
+	github.com/aws/aws-sdk-go-v2/service/route53resolver v1.41.1
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.72.3
 	github.com/aws/aws-sdk-go-v2/service/s3control v1.52.7
 	github.com/aws/aws-sdk-go-v2/service/shield v1.34.17
