@@ -30,12 +30,11 @@ type Route53ResolverFirewallDomainListLister struct {
 
 // List returns a list of all Route53 Resolver Firewall DomainLists before filtering to be nuked
 func (l *Route53ResolverFirewallDomainListLister) List(ctx context.Context, o interface{}) ([]resource.Resource, error) {
+	opts := o.(*nuke.ListerOpts)
 	var resources []resource.Resource
 
 	if l.svc == nil {
-		opts := o.(*nuke.ListerOpts)
-		svc := r53r.NewFromConfig(*opts.Config)
-		l.svc = svc
+		l.svc = r53r.NewFromConfig(*opts.Config)
 	}
 
 	params := &r53r.ListFirewallDomainListsInput{}
@@ -49,8 +48,8 @@ func (l *Route53ResolverFirewallDomainListLister) List(ctx context.Context, o in
 			resources = append(resources, &Route53ResolverFirewallDomainList{
 				svc:              l.svc,
 				Arn:              domainList.Arn,
-				CreatorRequestId: domainList.CreatorRequestId,
-				Id:               domainList.Id,
+				CreatorRequestID: domainList.CreatorRequestId,
+				ID:               domainList.Id,
 				ManagedOwnerName: domainList.ManagedOwnerName,
 				Name:             domainList.Name,
 			})
@@ -70,8 +69,8 @@ func (l *Route53ResolverFirewallDomainListLister) List(ctx context.Context, o in
 type Route53ResolverFirewallDomainList struct {
 	svc              Route53ResolverAPI
 	Arn              *string
-	CreatorRequestId *string
-	Id               *string
+	CreatorRequestID *string
+	ID               *string
 	ManagedOwnerName *string
 	Name             *string
 }
@@ -87,7 +86,7 @@ func (r *Route53ResolverFirewallDomainList) Filter() error {
 
 func (r *Route53ResolverFirewallDomainList) Remove(ctx context.Context) error {
 	_, err := r.svc.DeleteFirewallDomainList(ctx, &r53r.DeleteFirewallDomainListInput{
-		FirewallDomainListId: r.Id,
+		FirewallDomainListId: r.ID,
 	})
 
 	return err
@@ -95,4 +94,8 @@ func (r *Route53ResolverFirewallDomainList) Remove(ctx context.Context) error {
 
 func (r *Route53ResolverFirewallDomainList) Properties() types.Properties {
 	return types.NewPropertiesFromStruct(r)
+}
+
+func (r *Route53ResolverFirewallDomainList) String() string {
+	return *r.ID
 }

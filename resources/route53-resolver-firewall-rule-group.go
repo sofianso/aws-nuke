@@ -31,12 +31,11 @@ type Route53ResolverFirewallRuleGroupLister struct {
 
 // List returns a list of all Route53 Resolver Firewall RuleGroups before filtering to be nuked
 func (l *Route53ResolverFirewallRuleGroupLister) List(ctx context.Context, o interface{}) ([]resource.Resource, error) {
+	opts := o.(*nuke.ListerOpts)
 	var resources []resource.Resource
 
 	if l.svc == nil {
-		opts := o.(*nuke.ListerOpts)
-		svc := r53r.NewFromConfig(*opts.Config)
-		l.svc = svc
+		l.svc = r53r.NewFromConfig(*opts.Config)
 	}
 
 	vpcAssociations, vpcErr := ruleGroupsToAssociationIds(ctx, l.svc)
@@ -62,9 +61,9 @@ func (l *Route53ResolverFirewallRuleGroupLister) List(ctx context.Context, o int
 				vpcAssociationIds: vpcAssociations[*firewallRuleGroup.Id],
 				rules:             firewallRules,
 				Arn:               firewallRuleGroup.Arn,
-				CreatorRequestId:  firewallRuleGroup.CreatorRequestId,
-				Id:                firewallRuleGroup.Id,
-				OwnerId:           firewallRuleGroup.OwnerId,
+				CreatorRequestID:  firewallRuleGroup.CreatorRequestId,
+				ID:                firewallRuleGroup.Id,
+				OwnerID:           firewallRuleGroup.OwnerId,
 				Name:              firewallRuleGroup.Name,
 				ShareStatus:       firewallRuleGroup.ShareStatus,
 			})
@@ -83,9 +82,9 @@ func (l *Route53ResolverFirewallRuleGroupLister) List(ctx context.Context, o int
 // Fields in Firewall Rule we need to know for deletes
 type Route53ResolverFirewallRule struct {
 	Name                       *string
-	FirewallDomainListId       *string
+	FirewallDomainListID       *string
 	Qtype                      *string
-	FirewallThreatProtectionId *string
+	FirewallThreatProtectionID *string
 }
 
 // Route53ResolverFirewallRuleGroup is the resource type
@@ -94,9 +93,9 @@ type Route53ResolverFirewallRuleGroup struct {
 	vpcAssociationIds []*string
 	rules             []*Route53ResolverFirewallRule
 	Arn               *string
-	CreatorRequestId  *string
-	Id                *string
-	OwnerId           *string
+	CreatorRequestID  *string
+	ID                *string
+	OwnerID           *string
 	Name              *string
 	ShareStatus       r53rtypes.ShareStatus
 }
@@ -122,9 +121,9 @@ func (r *Route53ResolverFirewallRuleGroup) Remove(ctx context.Context) error {
 	// then remove rules
 	for _, rule := range r.rules {
 		_, err := r.svc.DeleteFirewallRule(ctx, &r53r.DeleteFirewallRuleInput{
-			FirewallRuleGroupId:        r.Id,
-			FirewallDomainListId:       rule.FirewallDomainListId,
-			FirewallThreatProtectionId: rule.FirewallThreatProtectionId,
+			FirewallRuleGroupId:        r.ID,
+			FirewallDomainListId:       rule.FirewallDomainListID,
+			FirewallThreatProtectionId: rule.FirewallThreatProtectionID,
 			Qtype:                      rule.Qtype,
 		})
 
@@ -139,7 +138,7 @@ func (r *Route53ResolverFirewallRuleGroup) Remove(ctx context.Context) error {
 
 	// finally delete the FRG
 	_, err := r.svc.DeleteFirewallRuleGroup(ctx, &r53r.DeleteFirewallRuleGroupInput{
-		FirewallRuleGroupId: r.Id,
+		FirewallRuleGroupId: r.ID,
 	})
 
 	return err
@@ -147,6 +146,10 @@ func (r *Route53ResolverFirewallRuleGroup) Remove(ctx context.Context) error {
 
 func (r *Route53ResolverFirewallRuleGroup) Properties() types.Properties {
 	return types.NewPropertiesFromStruct(r)
+}
+
+func (r *Route53ResolverFirewallRuleGroup) String() string {
+	return *r.ID
 }
 
 // ruleGroupsToAssociationIds - Associate all the FRG association ids to their firewall rule group ID to be
@@ -205,8 +208,8 @@ func getFirewallRules(ctx context.Context, svc Route53ResolverAPI, firewallRuleG
 		for i := range resp.FirewallRules {
 			rule := Route53ResolverFirewallRule{
 				Name:                       resp.FirewallRules[i].Name,
-				FirewallDomainListId:       resp.FirewallRules[i].FirewallDomainListId,
-				FirewallThreatProtectionId: resp.FirewallRules[i].FirewallThreatProtectionId,
+				FirewallDomainListID:       resp.FirewallRules[i].FirewallDomainListId,
+				FirewallThreatProtectionID: resp.FirewallRules[i].FirewallThreatProtectionId,
 				Qtype:                      resp.FirewallRules[i].Qtype,
 			}
 
