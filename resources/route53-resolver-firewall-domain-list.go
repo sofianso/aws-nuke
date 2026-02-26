@@ -93,7 +93,11 @@ func (r *Route53ResolverFirewallDomainList) Remove(ctx context.Context) error {
 }
 
 func (r *Route53ResolverFirewallDomainList) Properties() types.Properties {
-	return types.NewPropertiesFromStruct(r)
+	props := types.NewPropertiesFromStruct(r)
+	// TODO(v4): remove backward-compat properties
+	props.Set("Id", r.ID)
+	props.Set("CreatorRequestId", r.CreatorRequestID)
+	return props
 }
 
 func (r *Route53ResolverFirewallDomainList) String() string {

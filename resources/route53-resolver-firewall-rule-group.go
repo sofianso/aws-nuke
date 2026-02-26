@@ -105,9 +105,9 @@ func (r *Route53ResolverFirewallRuleGroup) Remove(ctx context.Context) error {
 	var notFound *r53rtypes.ResourceNotFoundException
 
 	// disassociate VPCs first since that's slower
-	for _, associationId := range r.vpcAssociationIds {
+	for _, associationID := range r.vpcAssociationIds {
 		_, err := r.svc.DisassociateFirewallRuleGroup(ctx, &r53r.DisassociateFirewallRuleGroupInput{
-			FirewallRuleGroupAssociationId: associationId,
+			FirewallRuleGroupAssociationId: associationID,
 		})
 		if err != nil {
 			// ignore, probably already associated
@@ -145,7 +145,12 @@ func (r *Route53ResolverFirewallRuleGroup) Remove(ctx context.Context) error {
 }
 
 func (r *Route53ResolverFirewallRuleGroup) Properties() types.Properties {
-	return types.NewPropertiesFromStruct(r)
+	props := types.NewPropertiesFromStruct(r)
+	// TODO(v4): remove backward-compat properties
+	props.Set("Id", r.ID)
+	props.Set("CreatorRequestId", r.CreatorRequestID)
+	props.Set("OwnerId", r.OwnerID)
+	return props
 }
 
 func (r *Route53ResolverFirewallRuleGroup) String() string {
@@ -168,14 +173,14 @@ func ruleGroupsToAssociationIds(ctx context.Context, svc Route53ResolverAPI) (ma
 
 		frgas := resp.FirewallRuleGroupAssociations
 		for i := range frgas {
-			associationId := frgas[i].Id
-			if associationId != nil {
-				frgId := *frgas[i].FirewallRuleGroupId
+			associationID := frgas[i].Id
+			if associationID != nil {
+				frgID := *frgas[i].FirewallRuleGroupId
 
-				if _, ok := vpcAssociations[frgId]; !ok {
-					vpcAssociations[frgId] = []*string{associationId}
+				if _, ok := vpcAssociations[frgID]; !ok {
+					vpcAssociations[frgID] = []*string{associationID}
 				} else {
-					vpcAssociations[frgId] = append(vpcAssociations[frgId], associationId)
+					vpcAssociations[frgID] = append(vpcAssociations[frgID], associationID)
 				}
 			}
 		}
@@ -190,12 +195,12 @@ func ruleGroupsToAssociationIds(ctx context.Context, svc Route53ResolverAPI) (ma
 	return vpcAssociations, nil
 }
 
-// Get Firewall rules for the FRG with given firewallRuleGroupId
-func getFirewallRules(ctx context.Context, svc Route53ResolverAPI, firewallRuleGroupId *string) ([]*Route53ResolverFirewallRule, error) {
+// Get Firewall rules for the FRG with given firewallRuleGroupID
+func getFirewallRules(ctx context.Context, svc Route53ResolverAPI, firewallRuleGroupID *string) ([]*Route53ResolverFirewallRule, error) {
 	rules := []*Route53ResolverFirewallRule{}
 
 	params := &r53r.ListFirewallRulesInput{
-		FirewallRuleGroupId: firewallRuleGroupId,
+		FirewallRuleGroupId: firewallRuleGroupID,
 	}
 
 	for {

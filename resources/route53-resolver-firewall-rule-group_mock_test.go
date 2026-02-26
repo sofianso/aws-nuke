@@ -210,7 +210,7 @@ func Test_Mock_Route53ResolverFirewallRuleGroup_Remove(t *testing.T) {
 		DeleteFirewallRuleGroup(gomock.Any(), gomock.Any()).
 		Return(&r53r.DeleteFirewallRuleGroupOutput{}, nil)
 
-	firewall_rules := []*Route53ResolverFirewallRule{
+	firewallRules := []*Route53ResolverFirewallRule{
 		{
 			Name:                       ptr.String("rule1"),
 			Qtype:                      ptr.String("AAAA"),
@@ -221,7 +221,7 @@ func Test_Mock_Route53ResolverFirewallRuleGroup_Remove(t *testing.T) {
 	frg := &Route53ResolverFirewallRuleGroup{
 		svc:               mockRoute53Resolver,
 		vpcAssociationIds: []*string{ptr.String("rslvr-frgassoc-1")},
-		rules:             firewall_rules,
+		rules:             firewallRules,
 		Arn:               ptr.String("arn:aws:route53resolver:us-east-1:123456123456:firewall-rule-group/rslvr-frg-3"),
 		CreatorRequestID:  ptr.String("SomeAwsServiceCommand"),
 		ID:                ptr.String("rslvr-frg-3"),

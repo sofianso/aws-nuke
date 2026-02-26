@@ -97,10 +97,10 @@ func (r *Route53ResolverQueryLogConfig) Remove(ctx context.Context) error {
 	var notFound *r53rtypes.ResourceNotFoundException
 
 	// disassociate resources (VPCs)
-	for _, resourceId := range r.resourceAssociationIds {
+	for _, resourceID := range r.resourceAssociationIds {
 		_, err := r.svc.DisassociateResolverQueryLogConfig(ctx, &r53r.DisassociateResolverQueryLogConfigInput{
 			ResolverQueryLogConfigId: r.ID,
-			ResourceId:               resourceId,
+			ResourceId:               resourceID,
 		})
 
 		if err != nil {
@@ -121,7 +121,12 @@ func (r *Route53ResolverQueryLogConfig) Remove(ctx context.Context) error {
 }
 
 func (r *Route53ResolverQueryLogConfig) Properties() types.Properties {
-	return types.NewPropertiesFromStruct(r)
+	props := types.NewPropertiesFromStruct(r)
+	// TODO(v4): remove backward-compat properties
+	props.Set("Id", r.ID)
+	props.Set("CreatorRequestId", r.CreatorRequestID)
+	props.Set("OwnerId", r.OwnerID)
+	return props
 }
 
 func (r *Route53ResolverQueryLogConfig) String() string {
@@ -143,14 +148,14 @@ func qlcsToAssociationIds(ctx context.Context, svc Route53ResolverAPI) (map[stri
 		}
 
 		for _, qlcAssociation := range resp.ResolverQueryLogConfigAssociations {
-			resourceId := qlcAssociation.ResourceId
-			if resourceId != nil {
-				qlcId := *qlcAssociation.ResolverQueryLogConfigId
+			resourceID := qlcAssociation.ResourceId
+			if resourceID != nil {
+				qlcID := *qlcAssociation.ResolverQueryLogConfigId
 
-				if _, ok := resourceAssociations[qlcId]; !ok {
-					resourceAssociations[qlcId] = []*string{resourceId}
+				if _, ok := resourceAssociations[qlcID]; !ok {
+					resourceAssociations[qlcID] = []*string{resourceID}
 				} else {
-					resourceAssociations[qlcId] = append(resourceAssociations[qlcId], resourceId)
+					resourceAssociations[qlcID] = append(resourceAssociations[qlcID], resourceID)
 				}
 			}
 		}
